@@ -1,0 +1,83 @@
+{
+  "technology": [
+    "Web Development",
+    "Mobile Development",
+    "Data Science",
+    "Machine Learning",
+    "Artificial Intelligence",
+    "Cybersecurity",
+    "Cloud Computing",
+    "DevOps"
+  ],
+  "design": [
+    "UI/UX Design",
+    "Graphic Design",
+    "Video Editing",
+    "Photography",
+    "Animation",
+    "Digital Art",
+    "Product Design"
+  ],
+  "business": [
+    "Entrepreneurship",
+    "Digital Marketing",
+    "Project Management",
+    "Business Analysis",
+    "Product Management",
+    "Leadership",
+    "Innovation"
+  ],
+  "creative": [
+    "Music Production",
+    "Creative Writing",
+    "Content Creation",
+    "Blogging",
+    "Podcasting",
+    "Film Making",
+    "Game Development"
+  ],
+  "personal_development": [
+    "Public Speaking",
+    "Networking",
+    "Time Management",
+    "Career Development",
+    "Mentoring",
+    "Self Improvement",
+    "Productivity"
+  ],
+  "academic": [
+    "Research",
+    "Technical Writing",
+    "Open Source",
+    "Software Engineering",
+    "Quality Assurance",
+    "Database Management",
+    "System Administration"
+  ],
+  "writing": [
+    "Journalism",
+    "Copywriting",
+    "Academic Writing",
+    "Social Media",
+    "Communication",
+    "Storytelling"
+  ],
+  "health_fitness": [
+    "Fitness",
+    "Yoga",
+    "Nutrition",
+    "Mental Health",
+    "Sports",
+    "Wellness"
+  ],
+  "lifestyle": [
+    "Travel",
+    "Cooking",
+    "Reading",
+    "Gaming",
+    "Fashion",
+    "Environment",
+    "Volunteering",
+    "Community Service"
+  ]
+} 

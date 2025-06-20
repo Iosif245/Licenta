@@ -1,0 +1,17 @@
+export const ROUTE__HOME = '/';
+export const ROUTE__DASHBOARD = '/dashboard';
+export const ROUTE__PROFILE = '/profile';
+export const ROUTE__MESSAGES = '/messages';
+export const ROUTE__ASSOCIATIONS = '/associations';
+export const ROUTE__ASSOCIATION_DETAILS = '/associations/:id';
+export const ROUTE__EVENTS = '/events';
+export const ROUTE__EVENT_DETAILS = '/events/:id';
+export const ROUTE__CREATE_EVENT = '/events/create';
+export const ROUTE__ANNOUNCEMENTS = '/announcements';
+export const ROUTE__ABOUT = '/about';
+export const ROUTE__CONTACT = '/contact';
+export const ROUTE__SETTINGS = '/settings';
+export const ROUTE__LOGIN = '/login';
+export const ROUTE__REGISTER = '/register';
+export const ROUTE__FORGOT_PASSWORD = '/forgot-password';
+export const ROUTE__RESET_PASSWORD = '/reset-password';
