@@ -37,11 +37,18 @@ namespace ConnectCampus.Infrastructure
                 var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL") 
                     ?? configuration.GetConnectionString("DefaultConnection");
                 
-                Console.WriteLine($"[DEBUG] FULL Connection string: '{connectionString}'");
+                Console.WriteLine($"[DEBUG] Original connection string: '{connectionString}'");
                 
                 if (string.IsNullOrEmpty(connectionString))
                 {
                     throw new InvalidOperationException("No database connection string found. Please set DATABASE_URL environment variable.");
+                }
+                
+                // Convert PostgreSQL URI format to Npgsql format if needed
+                if (connectionString.StartsWith("postgresql://") || connectionString.StartsWith("postgres://"))
+                {
+                    connectionString = ConvertPostgreSqlUriToConnectionString(connectionString);
+                    Console.WriteLine($"[DEBUG] Converted connection string: '{connectionString}'");
                 }
                 
                 options.UseNpgsql(
@@ -142,6 +149,19 @@ namespace ConnectCampus.Infrastructure
             services.AddScoped<INotificationHubContext, NotificationHubContext>();
 
             return services;
+        }
+        
+        private static string ConvertPostgreSqlUriToConnectionString(string uri)
+        {
+            var parsedUri = new Uri(uri);
+            var host = parsedUri.Host;
+            var port = parsedUri.Port;
+            var database = parsedUri.AbsolutePath.TrimStart('/');
+            var userInfo = parsedUri.UserInfo.Split(':');
+            var username = userInfo[0];
+            var password = userInfo.Length > 1 ? userInfo[1] : "";
+            
+            return $"Host={host};Port={port};Database={database};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true;";
         }
     }
 } 
