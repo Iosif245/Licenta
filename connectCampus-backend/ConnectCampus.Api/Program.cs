@@ -26,7 +26,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 builder.Services.AddCors(options => options.AddPolicy("LocalhostPolicy", builder => builder.WithOrigins(
     "http://localhost:5174", 
     "http://localhost:5173",
-    "https://licenta-mocha.vercel.app/" // Domeniul Vercel
+    "https://licenta-mocha.vercel.app" // Domeniul Vercel
 ) 
     .AllowAnyHeader() 
     .AllowAnyMethod() 
