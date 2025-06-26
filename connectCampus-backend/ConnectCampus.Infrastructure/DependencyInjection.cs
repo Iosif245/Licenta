@@ -37,7 +37,7 @@ namespace ConnectCampus.Infrastructure
                 var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL") 
                     ?? configuration.GetConnectionString("DefaultConnection");
                 
-                Console.WriteLine($"[DEBUG] Using connection string: '{connectionString?.Substring(0, Math.Min(50, connectionString?.Length ?? 0))}...'");
+                Console.WriteLine($"[DEBUG] FULL Connection string: '{connectionString}'");
                 
                 if (string.IsNullOrEmpty(connectionString))
                 {
