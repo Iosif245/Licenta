@@ -33,22 +33,16 @@ namespace ConnectCampus.Infrastructure
             
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                // Try direct environment variable first, then fallback to config
-                var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL") 
-                    ?? configuration.GetConnectionString("DefaultConnection");
+                var connectionString = configuration.GetConnectionString("DefaultConnection");
                 
-                Console.WriteLine($"[DEBUG] Original connection string: '{connectionString}'");
-                
-                if (string.IsNullOrEmpty(connectionString))
-                {
-                    throw new InvalidOperationException("No database connection string found. Please set DATABASE_URL environment variable.");
-                }
+                Console.WriteLine($"[DEBUG] Connection string: '{connectionString?.Substring(0, Math.Min(50, connectionString?.Length ?? 0))}...'");
                 
                 // Convert PostgreSQL URI format to Npgsql format if needed
-                if (connectionString.StartsWith("postgresql://") || connectionString.StartsWith("postgres://"))
+                if (!string.IsNullOrEmpty(connectionString) && 
+                    (connectionString.StartsWith("postgresql://") || connectionString.StartsWith("postgres://")))
                 {
                     connectionString = ConvertPostgreSqlUriToConnectionString(connectionString);
-                    Console.WriteLine($"[DEBUG] Converted connection string: '{connectionString}'");
+                    Console.WriteLine($"[DEBUG] Converted connection string: '{connectionString?.Substring(0, Math.Min(50, connectionString?.Length ?? 0))}...'");
                 }
                 
                 options.UseNpgsql(
