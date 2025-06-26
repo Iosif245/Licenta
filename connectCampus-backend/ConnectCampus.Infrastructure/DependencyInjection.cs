@@ -35,11 +35,28 @@ namespace ConnectCampus.Infrastructure
             {
                 var connectionString = configuration.GetConnectionString("DefaultConnection");
                 
+                // Debug logging
+                Console.WriteLine($"[DEBUG] Original connection string: '{connectionString}'");
+                Console.WriteLine($"[DEBUG] All environment variables containing DATABASE:");
+                foreach (DictionaryEntry env in Environment.GetEnvironmentVariables())
+                {
+                    if (env.Key.ToString().Contains("DATABASE") || env.Key.ToString().Contains("CONNECTION"))
+                    {
+                        Console.WriteLine($"[DEBUG] {env.Key} = {env.Value}");
+                    }
+                }
+                
                 // Replace ${DATABASE_URL} placeholder with actual environment variable
                 if (connectionString?.Contains("${DATABASE_URL}") == true)
                 {
                     var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+                    Console.WriteLine($"[DEBUG] DATABASE_URL env var: '{databaseUrl}'");
                     connectionString = connectionString.Replace("${DATABASE_URL}", databaseUrl);
+                    Console.WriteLine($"[DEBUG] Final connection string: '{connectionString}'");
+                }
+                else
+                {
+                    Console.WriteLine($"[DEBUG] No ${DATABASE_URL} placeholder found or connectionString is null");
                 }
                 
                 options.UseNpgsql(
