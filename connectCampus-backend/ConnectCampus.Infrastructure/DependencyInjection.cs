@@ -35,7 +35,16 @@ namespace ConnectCampus.Infrastructure
             {
                 var connectionString = configuration.GetConnectionString("DefaultConnection");
                 
-                Console.WriteLine($"[DEBUG] Connection string: '{connectionString?.Substring(0, Math.Min(50, connectionString?.Length ?? 0))}...'");
+                Console.WriteLine($"[DEBUG] Raw connection string: '{connectionString}'");
+                Console.WriteLine($"[DEBUG] ConnectionStrings__DefaultConnection env var: '{Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")}'");
+                Console.WriteLine($"[DEBUG] All ConnectionStrings env vars:");
+                foreach (DictionaryEntry env in Environment.GetEnvironmentVariables())
+                {
+                    if (env.Key.ToString().Contains("Connection"))
+                    {
+                        Console.WriteLine($"[DEBUG] {env.Key} = {env.Value}");
+                    }
+                }
                 
                 // Convert PostgreSQL URI format to Npgsql format if needed
                 if (!string.IsNullOrEmpty(connectionString) && 
