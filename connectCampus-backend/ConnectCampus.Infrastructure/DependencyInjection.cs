@@ -37,13 +37,12 @@ namespace ConnectCampus.Infrastructure
                 
                 Console.WriteLine($"[DEBUG] Raw connection string: '{connectionString}'");
                 Console.WriteLine($"[DEBUG] ConnectionStrings__DefaultConnection env var: '{Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")}'");
-                Console.WriteLine($"[DEBUG] All ConnectionStrings env vars:");
-                foreach (DictionaryEntry env in Environment.GetEnvironmentVariables())
+                
+                // Simple fallback if config is empty
+                if (string.IsNullOrEmpty(connectionString))
                 {
-                    if (env.Key.ToString().Contains("Connection"))
-                    {
-                        Console.WriteLine($"[DEBUG] {env.Key} = {env.Value}");
-                    }
+                    connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection");
+                    Console.WriteLine($"[DEBUG] Using fallback env var: '{connectionString}'");
                 }
                 
                 // Convert PostgreSQL URI format to Npgsql format if needed
