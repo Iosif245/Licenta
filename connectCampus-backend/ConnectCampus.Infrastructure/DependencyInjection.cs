@@ -33,30 +33,15 @@ namespace ConnectCampus.Infrastructure
             
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                var connectionString = configuration.GetConnectionString("DefaultConnection");
+                // Try direct environment variable first, then fallback to config
+                var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL") 
+                    ?? configuration.GetConnectionString("DefaultConnection");
                 
-                // Debug logging
-                Console.WriteLine($"[DEBUG] Original connection string: '{connectionString}'");
-                Console.WriteLine($"[DEBUG] All environment variables containing DATABASE:");
-                foreach (DictionaryEntry env in Environment.GetEnvironmentVariables())
-                {
-                    if (env.Key.ToString().Contains("DATABASE") || env.Key.ToString().Contains("CONNECTION"))
-                    {
-                        Console.WriteLine($"[DEBUG] {env.Key} = {env.Value}");
-                    }
-                }
+                Console.WriteLine($"[DEBUG] Using connection string: '{connectionString?.Substring(0, Math.Min(50, connectionString?.Length ?? 0))}...'");
                 
-                // Replace ${DATABASE_URL} placeholder with actual environment variable
-                if (connectionString?.Contains("${DATABASE_URL}") == true)
+                if (string.IsNullOrEmpty(connectionString))
                 {
-                    var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
-                    Console.WriteLine($"[DEBUG] DATABASE_URL env var: '{databaseUrl}'");
-                    connectionString = connectionString.Replace("${DATABASE_URL}", databaseUrl);
-                    Console.WriteLine($"[DEBUG] Final connection string: '{connectionString}'");
-                }
-                else
-                {
-                    Console.WriteLine($"[DEBUG] No ${DATABASE_URL} placeholder found or connectionString is null");
+                    throw new InvalidOperationException("No database connection string found. Please set DATABASE_URL environment variable.");
                 }
                 
                 options.UseNpgsql(
