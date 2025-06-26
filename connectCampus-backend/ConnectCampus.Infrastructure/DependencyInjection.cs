@@ -33,8 +33,17 @@ namespace ConnectCampus.Infrastructure
             
             services.AddDbContext<ApplicationDbContext>(options =>
             {
+                var connectionString = configuration.GetConnectionString("DefaultConnection");
+                
+                // Replace ${DATABASE_URL} placeholder with actual environment variable
+                if (connectionString?.Contains("${DATABASE_URL}") == true)
+                {
+                    var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+                    connectionString = connectionString.Replace("${DATABASE_URL}", databaseUrl);
+                }
+                
                 options.UseNpgsql(
-                    configuration.GetConnectionString("DefaultConnection"),
+                    connectionString,
                     b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName));
             });
 
