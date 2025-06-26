@@ -26,7 +26,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 builder.Services.AddCors(options => options.AddPolicy("LocalhostPolicy", builder => builder.WithOrigins(
     "http://localhost:5174", 
     "http://localhost:5173",
-    "https://licenta-mocha.vercel.app" // Domeniul Vercel
+    "https://connectcampus.site" // Domeniul Vercel
 ) 
     .AllowAnyHeader() 
     .AllowAnyMethod() 
@@ -34,14 +34,13 @@ builder.Services.AddCors(options => options.AddPolicy("LocalhostPolicy", builder
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-// if (app.Environment.IsDevelopment())
-// {
-//     app.UseSwagger();
-//     app.UseSwaggerUI();
-// }
-app.UseSwagger();
-app.UseSwaggerUI();
+Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
 app.UseCors("LocalhostPolicy");
 
 app.UseHttpsRedirection();
