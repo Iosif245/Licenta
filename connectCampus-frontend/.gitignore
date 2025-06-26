@@ -12,7 +12,6 @@ vite.config.d.ts
 tsconfig.tsbuildinfo
 
 build-env.js
-src/env
 src/config/environment.ts
 
 node_modules
